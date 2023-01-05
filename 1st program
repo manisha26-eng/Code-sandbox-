@@ -1,0 +1,41 @@
+You are given an array of strings tokens that represents an arithmetic expression in a Reverse Polish Notation.
+
+Evaluate the expression. Return an integer that represents the value of the expression.
+
+Note that:
+
+The valid operators are '+', '-', '*', and '/'.
+Each operand may be an integer or another expression.
+The division between two integers always truncates toward zero.
+There will not be any division by zero.
+The input represents a valid arithmetic expression in a reverse polish notation.
+The answer and all the intermediate calculations can be represented in a 32-bit integer.
+
+from typing import List
+
+def evaluate_rpn(tokens: List[str]) -> int:
+    # Initialize an empty stack
+    stack = []
+    
+    # Iterate through the tokens
+    for token in tokens:
+        # If the token is an operator, pop the top two values from the stack
+        if token in ['+', '-', '*', '/']:
+            val2 = stack.pop()
+            val1 = stack.pop()
+            
+            # Perform the operation and push the result back onto the stack
+            if token == '+':
+                stack.append(val1 + val2)
+            elif token == '-':
+                stack.append(val1 - val2)
+            elif token == '*':
+                stack.append(val1 * val2)
+            elif token == '/':
+                stack.append(val1 // val2)
+        # If the token is a value, convert it to an integer and push it onto the stack
+        else:
+            stack.append(int(token))
+    
+    # The result will be the top value on the stack
+    return stack[0]
