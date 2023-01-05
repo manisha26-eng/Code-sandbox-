@@ -1,0 +1,94 @@
+# Python program
+
+def find_combinations(k, n):
+    # base case: if k is 1, then the only valid combination is [n]
+    if k == 1:
+        if n in range(1, 10):
+            return [[n]]
+        else:
+            return []
+
+    # recursive case: try each number from 1 to 9 as the first number in the combination
+    combinations = []
+    for i in range(1, 10):
+        # find all combinations that start with i and have a sum of n - i
+        subcombinations = find_combinations(k - 1, n - i)
+        for subcombination in subcombinations:
+            # append i to the front of each subcombination and add it to the list of combinations
+            combinations.append([i] + subcombination)
+
+    return combinations
+
+# test the function
+print(find_combinations(3, 6))
+
+// C++ program
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<vector<int>> find_combinations(int k, int n) {
+    // base case: if k is 1, then the only valid combination is [n]
+    if (k == 1) {
+        if (n >= 1 && n <= 9) {
+            return {{n}};
+        } else {
+            return {};
+        }
+    }
+
+    // recursive case: try each number from 1 to 9 as the first number in the combination
+    vector<vector<int>> combinations;
+    for (int i = 1; i <= 9; i++) {
+        // find all combinations that start with i and have a sum of n - i
+        auto subcombinations = find_combinations(k - 1, n - i);
+        for (auto subcombination : subcombinations) {
+            // append i to the front of each subcombination and add it to the list of combinations
+            subcombination.insert(subcombination.begin(), i);
+            combinations.push_back(subcombination);
+        }
+    }
+
+    return combinations;
+}
+
+int main() {
+    // test the function
+    auto combinations = find_combinations(3, 6);
+    for (auto combination : combinations) {
+        for (int i : combination) {
+            cout << i << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+// C program
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int size;
+    int *data;
+} Array;
+
+Array find_combinations(int k, int n) {
+    // base case: if k is 1, then the only valid combination is [n]
+    if (k == 1) {
+        if (n >= 1 && n <= 9) {
+            Array arr = {1, malloc(sizeof(int))};
+            arr.data[0] = n;
+            return arr;
+        } else {
+            Array arr = {0, NULL};
+            return arr;
+        }
+    }
+
+    // recursive case: try each number from 1 to 9 as the first number
+
